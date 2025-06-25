@@ -1,0 +1,99 @@
+.books-box {
+    flex: 1;
+    flex-direction: column;
+}
+
+.progress-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*.reminders-page {*/
+/*    padding: 20px;*/
+/*    font-family: sans-serif;*/
+/*}*/
+
+/*.categories-header {*/
+/*    margin-bottom: 30px;*/
+/*}*/
+
+/*.categories-container {*/
+/*    display: flex;*/
+/*    overflow-x: auto;*/
+/*    white-space: nowrap;*/
+/*    padding-bottom: 10px;*/
+/*    -ms-overflow-style: none;*/
+/*    scrollbar-width: none;*/
+/*}*/
+
+/*.categories-container::-webkit-scrollbar {*/
+/*    display: none;*/
+/*}*/
+
+/*.category-button {*/
+/*    flex: 0 0 auto;*/
+/*    padding: 10px 20px;*/
+/*    margin-right: 10px;*/
+/*    border-radius: 20px;*/
+/*    border: 1px solid #ccc;*/
+/*    background-color: #f0f0f0;*/
+/*    cursor: pointer;*/
+/*    transition: background-color 0.2s;*/
+/*}*/
+
+/*.category-button:hover {*/
+/*    background-color: #e0e0e0;*/
+/*}*/
+
+/*.reminders-list h2 {*/
+/*    margin-bottom: 15px;*/
+/*}*/
+
+/*.reminder-card {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    padding: 15px;*/
+/*    margin-bottom: 10px;*/
+/*    border: 1px solid #ddd;*/
+/*    border-radius: 8px;*/
+/*    background-color: #fff;*/
+/*    cursor: pointer;*/
+/*    transition: box-shadow 0.2s;*/
+/*}*/
+
+/*.reminder-card:hover {*/
+/*    box-shadow: 0 2px 8px rgba(0,0,0,0.1);*/
+/*}*/
+
+/*.reminder-radio {*/
+/*    margin-right: 15px;*/
+/*    cursor: pointer;*/
+/*    width: 20px;*/
+/*    height: 20px;*/
+/*}*/
+
+/*.reminder-body p {*/
+/*    margin: 0;*/
+/*}*/
+
+/*.modal-overlay {*/
+/*    position: fixed;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    right: 0;*/
+/*    bottom: 0;*/
+/*    background-color: rgba(0, 0, 0, 0.5);*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*}*/
+
+/*.modal-content {*/
+/*    background-color: white;*/
+/*    padding: 30px;*/
+/*    border-radius: 8px;*/
+/*    min-width: 300px;*/
+/*    max-width: 500px;*/
+/*}*/
