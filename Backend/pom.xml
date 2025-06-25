@@ -135,6 +135,7 @@
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                         </exclude>
+                        <skipTests>true</skipTests>
                     </excludes>
                 </configuration>
             </plugin>
