@@ -2,7 +2,7 @@ name: CI/CD Build and Push Docker Images to Docker Hub
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 jobs:
   build_and_push:
@@ -33,7 +33,7 @@ jobs:
       - name: Build and push Backend image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./Backend
           file: ./Backend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/remindersplus-backend:latest
@@ -45,3 +45,4 @@ jobs:
           file: ./frontend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/remindersplus-frontend:latest
+
