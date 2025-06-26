@@ -5,33 +5,25 @@ services:
     image: postgres:14-alpine
     container_name: reminders_plus_db
     restart: unless-stopped
-    # Поставување на променливи за околината, земени од вашиот application.properties
+
     environment:
-      POSTGRES_DB: remindersPlus          # Име на базата
-      POSTGRES_USER: postgres             # Корисничко име
-      POSTGRES_PASSWORD: AndrejSQL        # Лозинка
+      POSTGRES_DB: remindersPlus
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: AndrejSQL
     ports:
-      # Мапирање на портата 5432 од контејнерот кон вашата локална машина
-      # Ова е корисно ако сакате да се поврзете со базата преку алат како DBeaver
       - "5432:5432"
     volumes:
-      # Именуван волумен за да се зачуваат податоците од базата дури и ако контејнерот се избрише
       - postgres-data:/var/lib/postgresql/data
 
   backend:
     container_name: reminders_plus_backend
-    # Му кажуваме на Docker да го изгради имиџот од Dockerfile-от во './backend' директориумот
     build: ./backend
     restart: on-failure
-    # Backend-от зависи од базата, па ќе чека таа да се подигне прво
     depends_on:
       - db
     ports:
-      # Ја изложуваме портата 8080 на која работи Spring Boot
       - "8080:8080"
     environment:
-      # Овие променливи ќе ги надминат (override) вредностите во application.properties
-      # за да може апликацијата да се поврзе со 'db' сервисот во Docker мрежата
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/remindersPlus
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=AndrejSQL
@@ -39,19 +31,14 @@ services:
 
   frontend:
     container_name: reminders_plus_frontend
-    # Му кажуваме на Docker да го изгради имиџот од Dockerfile-от во './frontend' директориумот
     build: ./frontend
     restart: on-failure
-    # Frontend-от зависи од backend-от
     depends_on:
       - backend
     ports:
-      # Ја изложуваме портата 5173 на која работи развојниот сервер на Vite
       - "5173:5173"
     volumes:
-      # Мапирање на локалниот код во контејнерот за да функционира hot-reloading
       - ./frontend:/app
-      # Спречува локалниот node_modules да го пребрише тој во контејнерот
       - /app/node_modules
 
 volumes:
