@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: reminders-db
   namespace: default
@@ -10,6 +10,7 @@ spec:
   selector:
     matchLabels:
       app: reminders-db
+  serviceName: "reminders-db-service"
   template:
     metadata:
       labels:
@@ -39,14 +40,19 @@ spec:
           volumeMounts:
             - name: postgres-data
               mountPath: /var/lib/postgresql/data
-      volumes:
-        - name: postgres-data
-          emptyDir: {}
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: reminders-db
+  name: reminders-db-service
   namespace: default
 spec:
   selector:
@@ -55,4 +61,4 @@ spec:
     - protocol: TCP
       port: 5432
       targetPort: 5432
-  type: ClusterIP
+  clusterIP: None
