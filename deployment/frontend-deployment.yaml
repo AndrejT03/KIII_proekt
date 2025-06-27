@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: reminders-frontend
-  namespace: default
+  namespace: reminders
   labels:
     app: reminders-frontend
 spec:
@@ -26,7 +26,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: reminders-frontend-service
-  namespace: default
+  namespace: reminders
 spec:
   selector:
     app: reminders-frontend
@@ -34,5 +34,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-      nodePort: 30080
   type: NodePort

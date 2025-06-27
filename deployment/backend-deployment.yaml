@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: reminders-backend
-  namespace: default
+  namespace: reminders
   labels:
     app: reminders-backend
 spec:
@@ -54,7 +54,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: reminders-backend
-  namespace: default
+  namespace: reminders
 spec:
   selector:
     app: reminders-backend
