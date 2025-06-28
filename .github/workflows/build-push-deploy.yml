@@ -42,7 +42,7 @@ jobs:
           path: ./Backend/target/*.jar
 
 
-  build-and-push:
+  push:
     runs-on: ubuntu-latest
     needs: build-and-test
     steps:
@@ -66,11 +66,42 @@ jobs:
         with:
           context: ./Backend
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/reminders-plus-backend:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/reminders-plus-backend:${{ github.sha }}
 
       - name: Build and push Frontend image
         uses: docker/build-push-action@v5
         with:
           context: ./frontend
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/reminders-plus-frontend:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/reminders-plus-frontend:${{ github.sha }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: push
+    steps:
+      - name: Checkout k8s config repo
+        uses: actions/checkout@v4
+        with:
+          repository: AndrejT03/KIII_proekt-config
+          token: ${{ secrets.GH_PAT }}
+          path: k8s-config
+
+      - name: Install Kustomize
+        run: |
+          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+          sudo mv kustomize /usr/local/bin/
+
+      - name: Update image tags with Kustomize
+        working-directory: ./k8s-config
+        run: |
+          kustomize edit set image ${{ secrets.DOCKERHUB_USERNAME }}/reminders-plus-backend:${{ github.sha }}
+          kustomize edit set image ${{ secrets.DOCKERHUB_USERNAME }}/reminders-plus-frontend:${{ github.sha }}
+
+      - name: Commit and push changes
+        working-directory: ./k8s-config
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add kustomization.yml
+          git commit -m "Update image tags to ${{ github.sha }} [skip ci]"
+          git push
